@@ -102,9 +102,14 @@ def main():
     levels_grid = levels_grid.to('cpu').detach().numpy().copy()
 
     fig = plt.figure(figsize=(19.2, 10.8))
-    ax = fig.add_subplot(111)
+    ax = fig.add_subplot(121)
     ax.contourf(X, Y, levels_grid)
     plt.savefig('level_pred.png')
+    plt.show()
+
+    # 3D グラフを作成する。
+    ax2 = fig.add_subplot(122, projection="3d")
+    ax2.plot_surface(X, Y, levels_grid)
     plt.show()
 
     # Plot gradient of predicted level set
