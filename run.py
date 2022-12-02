@@ -70,8 +70,8 @@ def main():
         avg_train_loss = 0.0
         for data in train_loader:
             input = data.to(device)
-            train_loss = sphere_levelset_loss(model, input)
-            # train_loss = plane_loss(model, input)
+            # train_loss = sphere_levelset_loss(model, input)
+            train_loss = plane_loss(model, input)
             # update
             optim.zero_grad(set_to_none=True)
             train_loss.backward()
