@@ -87,28 +87,32 @@ def main():
     sidelen = 1024
     grid = get_mgrid(sidelen) * 2
 
-    coords = grid.to(device)
-    levels, _ = model(coords)
-    levels = torch.reshape(levels, (sidelen, sidelen))
+    grid = grid.to(device)
+    levels, _ = model(grid)
 
-    coords = coords.to('cpu').detach().numpy().copy()
-    levels = levels.to('cpu').detach().numpy().copy()
+    X = grid[:, 0]
+    Y = grid[:, 1]
+    X = torch.reshape(X, (sidelen, sidelen))
+    Y = torch.reshape(Y, (sidelen, sidelen))
+    levels_grid = torch.reshape(levels, (sidelen, sidelen))
+
+    X = X.to('cpu').detach().numpy().copy()
+    Y = Y.to('cpu').detach().numpy().copy()
+    levels_grid = levels_grid.to('cpu').detach().numpy().copy()
 
     fig = plt.figure(figsize=(19.2, 10.8))
-    # ax = fig.add_subplot(111, projection='3d')
     ax = fig.add_subplot(121)
-    # ax.scatter(coords[:, 0], coords[:, 1], levels[:], c="red", s=0.05)
-    ax.contourf(coords[:, 0], coords[:, 1], levels)
+    ax.contourf(X, Y, levels_grid)
     plt.savefig('level_pred.png')
     plt.show()
 
     # Plot gradient of predicted level set
-    grad = torch.autograd.grad(levels, [coords], create_graph=True)[0]
+    grad = torch.autograd.grad(levels, [grid], create_graph=True)[0]
     
     fig = plt.figure(figsize=(19.2, 10.8))
     # ax = fig.add_subplot(111, projection='3d')
     ax = fig.add_subplot(121)
-    ax.quiver(coords[:, 0], coords[:, 1], grad[:, 0], grad[:, 1])
+    ax.quiver(grid[:, 0], grid[:, 1], grad[:, 0], grad[:, 1])
     plt.savefig('auto_grad.png')
     plt.show()
 
