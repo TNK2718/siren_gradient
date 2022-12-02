@@ -12,4 +12,4 @@ class RectSampler(Dataset):
         return 1
 
     def __getitem__(self, index):
-        torch.zeros(self.sample_num, 2).uniform_(-2., 2.)
+        return torch.zeros(self.sample_num, 2).uniform_(-2., 2.)
