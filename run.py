@@ -101,7 +101,7 @@ def main():
     levels_grid = levels_grid.to('cpu').detach().numpy().copy()
 
     fig = plt.figure(figsize=(19.2, 10.8))
-    ax = fig.add_subplot(121)
+    ax = fig.add_subplot(111)
     ax.contourf(X, Y, levels_grid)
     plt.savefig('level_pred.png')
     plt.show()
@@ -111,7 +111,7 @@ def main():
     
     fig = plt.figure(figsize=(19.2, 10.8))
     # ax = fig.add_subplot(111, projection='3d')
-    ax = fig.add_subplot(121)
+    ax = fig.add_subplot(111)
     ax.quiver(grid[:, 0], grid[:, 1], grad[:, 0], grad[:, 1])
     plt.savefig('auto_grad.png')
     plt.show()

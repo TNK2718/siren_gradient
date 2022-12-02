@@ -4,6 +4,6 @@ import torch
 def sphere_levelset_loss(model, input):
     pred, _ = model(input)
     gt_norm = torch.linalg.norm(input, dim=1, keepdim=True)
-    gt = gt_norm - torch.ones_like(gt_norm)
+    gt = torch.abs(gt_norm - torch.ones_like(gt_norm))
     loss = torch.mean(torch.abs(pred - gt))
     return loss
