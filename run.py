@@ -43,7 +43,7 @@ def main():
     base_ops.add_argument('--samples', type=int, default=10000)
     base_ops.add_argument('--batch_size', type=int, default=1024)
     base_ops.add_argument('--lr', type=float, default=1.0e-4)
-    base_ops.add_argument('--epochs', type=int, default=100)
+    base_ops.add_argument('--epochs', type=int, default=1000)
     args = parser.parse_args()
 
     # device
@@ -84,10 +84,12 @@ def main():
     # Plot predicted level set
     model.eval()
     
-    grid = get_mgrid(1024)
+    sidelen = 1024
+    grid = get_mgrid(sidelen) * 2
 
     coords = grid.to(device)
     levels, _ = model(coords)
+    levels = torch.reshape(levels, (sidelen, sidelen))
 
     coords = coords.to('cpu').detach().numpy().copy()
     levels = levels.to('cpu').detach().numpy().copy()
