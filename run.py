@@ -53,7 +53,7 @@ def main():
     else:
         device = torch.device('cpu')
 
-    model = Siren(2, args.hidden_features, args.hidden_layers, 1, outermost_linear=True)
+    model = Siren(in_features=2, out_features=1, hidden_features=args.hidden_features, hidden_layers=args.hidden_layers, outermost_linear=True)
     model.to(device)
 
     sampler = RectSampler(args.samples // args.batch_size)
