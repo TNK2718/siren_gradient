@@ -76,7 +76,7 @@ def main():
             train_loss.backward()
             optim.step()
 
-            avg_train_loss += train_loss.item()
+            avg_train_loss += train_loss.item() * args.batch_size
 
         avg_train_loss /= args.samples
         print("epoch={:d}, loss={:f}".format(epoch, avg_train_loss))
@@ -87,7 +87,7 @@ def main():
     grid = get_mgrid(1024)
 
     coords = grid.to(device)
-    levels = model(coords)
+    levels, _ = model(coords)
 
     coords = coords.to('cpu').detach().numpy().copy()
     levels = levels.to('cpu').detach().numpy().copy()
