@@ -6,7 +6,7 @@ import torch
 from networks import Siren
 from dataloader import RectSampler
 from torch.utils.data import Subset, DataLoader
-from losses import sphere_levelset_loss
+from losses import sphere_levelset_loss, plane_loss
 import matplotlib.pyplot as plt
 
 # Copyright (c) 2020 Vincent Sitzmann
@@ -70,7 +70,8 @@ def main():
         avg_train_loss = 0.0
         for data in train_loader:
             input = data.to(device)
-            train_loss = sphere_levelset_loss(model, input)
+            # train_loss = sphere_levelset_loss(model, input)
+            train_loss = plane_loss(model, input)
             # update
             optim.zero_grad(set_to_none=True)
             train_loss.backward()
