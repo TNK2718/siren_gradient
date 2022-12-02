@@ -53,7 +53,7 @@ def main():
     else:
         device = torch.device('cpu')
 
-    model = Siren(2, args.hidden_features, args.hidden_layers, 1)
+    model = Siren(2, args.hidden_features, args.hidden_layers, 1, outermost_linear=True)
     model.to(device)
 
     sampler = RectSampler(args.samples // args.batch_size)
@@ -70,8 +70,8 @@ def main():
         avg_train_loss = 0.0
         for data in train_loader:
             input = data.to(device)
-            # train_loss = sphere_levelset_loss(model, input)
-            train_loss = plane_loss(model, input)
+            train_loss = sphere_levelset_loss(model, input)
+            # train_loss = plane_loss(model, input)
             # update
             optim.zero_grad(set_to_none=True)
             train_loss.backward()
@@ -86,7 +86,7 @@ def main():
     model.eval()
     
     sidelen = 1024
-    grid = get_mgrid(sidelen) * 2
+    grid = get_mgrid(sidelen)
 
     grid = grid.to(device)
     levels, _ = model(grid)
