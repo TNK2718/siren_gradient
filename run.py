@@ -69,6 +69,7 @@ def main():
         model.train()
         avg_train_loss = 0.0
         for data in train_loader:
+            print(data)
             input = data.to(device)
             train_loss = sphere_levelset_loss(model, input)
             # train_loss = plane_loss(model, input)
