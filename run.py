@@ -91,6 +91,7 @@ def main():
 
     grid = grid.to(device)
     levels, _ = model(grid)
+    print(levels)
 
     X = grid[:, 0]
     Y = grid[:, 1]
