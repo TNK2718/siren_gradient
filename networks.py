@@ -39,12 +39,12 @@ class SineLayer(nn.Module):
                                             np.sqrt(6 / self.in_features) / self.omega_0)
 
     def forward(self, input):
-        return torch.relu(self.omega_0 * self.linear(input))
+        return torch.sin(self.omega_0 * self.linear(input))
 
     def forward_with_intermediate(self, input):
         # For visualization of activation distributions
         intermediate = self.omega_0 * self.linear(input)
-        return torch.relu(intermediate), intermediate
+        return torch.sin(intermediate), intermediate
 
 
 class Siren(nn.Module):
