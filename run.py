@@ -93,6 +93,8 @@ def main():
 
     X = grid[:, 0]
     Y = grid[:, 1]
+    print(X)
+    print(Y)
     X = torch.reshape(X, (sidelen, sidelen))
     Y = torch.reshape(Y, (sidelen, sidelen))
     levels_grid = torch.reshape(levels, (sidelen, sidelen))
