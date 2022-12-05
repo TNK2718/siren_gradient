@@ -1,11 +1,11 @@
 import torch
 
-# Toy case: level set function of sphere with radius 1.0
+# Toy case: level set function of sphere with radius 0.5
 def sphere_levelset_loss(model, input):
     pred, _ = model(input)
     gt_norm = torch.linalg.norm(input, dim=1, keepdim=True)
-    gt = gt_norm - 0.3 * torch.ones_like(gt_norm)
-    loss = torch.mean(torch.abs(pred - gt))
+    gt = gt_norm - 0.5 * torch.ones_like(gt_norm) # C(x, y) = sqrt(x^2+y^2) - 0.5
+    loss = torch.mean(torch.abs(pred - gt.detach())) # L = |NN(x,y) - C(x,y)|
     return loss
 
 # Debug
